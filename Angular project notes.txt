@@ -1,0 +1,6 @@
+Powershell not compiling  https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7
+
+
+An observable is a stream of data that we are getting from our API
+
+TO GET DATA FROM THE OBSERVABLE WE NEED TO SUBSCRIBE TO THE OBSERVABLE
