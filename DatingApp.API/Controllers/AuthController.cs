@@ -29,7 +29,7 @@ namespace DatingApp.API.Controllers
         {
             userForRegisterDto.Username = userForRegisterDto.Username.ToLower();
 
-            if(await _repo.UserExists(userForRegisterDto.Username))
+            if (await _repo.UserExists(userForRegisterDto.Username))
             {
                 return BadRequest("Username already exists");
             }
@@ -39,7 +39,7 @@ namespace DatingApp.API.Controllers
                 Username = userForRegisterDto.Username
             };
 
-            var createdUser =  await _repo.Register(userToCreate, userForRegisterDto.Password);
+            var createdUser = await _repo.Register(userToCreate, userForRegisterDto.Password);
 
             return StatusCode(201);
         }
@@ -48,9 +48,10 @@ namespace DatingApp.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
-            var userFromRepo =  await _repo.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
+            var userFromRepo = await _repo.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
 
-            if(userFromRepo == null){
+            if (userFromRepo == null)
+            {
                 return Unauthorized();
             }
 
@@ -64,9 +65,9 @@ namespace DatingApp.API.Controllers
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-            var tokenDescriptor = new SecurityTokenDescriptor 
+            var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject =  new ClaimsIdentity(claims),
+                Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddDays(1),
                 SigningCredentials = creds
             };
@@ -75,7 +76,8 @@ namespace DatingApp.API.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return Ok( new {
+            return Ok(new
+            {
                 token = tokenHandler.WriteToken(token)
             });
         }
