@@ -10,7 +10,7 @@ import { of, Observable } from 'rxjs';
 export class ListsResolver implements Resolve<User[]> {
   pageNumber = 1;
   pageSize = 5;
-  likesParam = 'Likes';
+  likesParam = 'Likers';
 
   constructor(
     private userService: UserService,
@@ -19,7 +19,6 @@ export class ListsResolver implements Resolve<User[]> {
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
-    // tslint:disable-next-line: no-string-literal
     return this.userService.getUsers(this.pageNumber, this.pageSize, null, this.likesParam).pipe(
       catchError(error => {
         this.alertify.error('Problem retrieving data');

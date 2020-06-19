@@ -27,7 +27,7 @@ namespace DatingApp.API.Data
 
         public async Task<Like> GetLike(int userId, int recipientId)
         {
-           return await _context.Likes.FirstOrDefaultAsync(u => u.LikerId ==userId && u.LikeeId == recipientId);
+           return await _context.Likes.FirstOrDefaultAsync(u => u.LikerId == userId && u.LikeeId == recipientId);
         }
 
         public async Task<Photo> GetMainPhotoForUser(int userId)
@@ -55,7 +55,7 @@ namespace DatingApp.API.Data
 
              users = users.Where(u => u.Id != userParams.UserId);
 
-             users = users.Where(u => u.Gender != userParams.Gender);
+             users = users.Where(u => u.Gender == userParams.Gender);
 
              if(userParams.Likers)
              {
@@ -107,7 +107,6 @@ namespace DatingApp.API.Data
                 {
                     return user.Likees.Where(u => u.LikerId ==id).Select(i => i.LikeeId);
                 }
-
         }
 
         public async Task<bool> SaveAll()
@@ -130,7 +129,7 @@ namespace DatingApp.API.Data
                 switch(messageParams.MessageContainer)
                 {
                     case "Inbox":
-                        messages = messages.Where(u => u.RecipientId ==messageParams.UserId && u.RecipientDeleted ==false);
+                        messages = messages.Where(u => u.RecipientId == messageParams.UserId && u.RecipientDeleted ==false);
                         break;
                     case "Outbox":
                         messages = messages.Where(u => u.SenderId == messageParams.UserId && u.SenderDeleted ==false);

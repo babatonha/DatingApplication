@@ -37,8 +37,7 @@ namespace DatingApp.API.Controllers
 
             if(string.IsNullOrEmpty(userParams.Gender))
             {
-                userParams.Gender = userFromRepo.Gender == "male" ? "male" : "female";
-
+                userParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
             }
 
             var users = await _repo.GetUsers(userParams);
@@ -93,18 +92,18 @@ namespace DatingApp.API.Controllers
             if(await _repo.GetUser(recipientId) == null)
                 return NotFound();
 
-                like = new Like 
-                {
-                    LikerId = id,
-                    LikeeId = recipientId
-                };
+            like = new Like 
+            {
+                LikerId = id,
+                LikeeId = recipientId
+            };
 
-                _repo.Add<Like>(like);
+            _repo.Add<Like>(like);
 
-                if(await _repo.SaveAll())
-                    return Ok();
-                
-                return BadRequest("Failed to like user");
+            if(await _repo.SaveAll())
+                return Ok();
+            
+            return BadRequest("Failed to like user");
         }
     }
 }

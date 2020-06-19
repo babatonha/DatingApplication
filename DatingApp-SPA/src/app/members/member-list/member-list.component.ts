@@ -3,7 +3,8 @@ import { User } from '../../_models/user';
 import { UserService } from '../../_services/user.service';
 import { AlertifyService } from '../../_services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
-import { Pagination, PaginatedResult } from 'src/app/_models/pagination';
+import {Pagination, PaginatedResult} from '../../_models/pagination';
+// import { Pagination, PaginatedResult } from 'src/app/_models/pagination';
 
 
 
@@ -15,7 +16,7 @@ import { Pagination, PaginatedResult } from 'src/app/_models/pagination';
 export class MemberListComponent implements OnInit {
   users: User[];
   user: User = JSON.parse(localStorage.getItem('user'));
-  genderList: [{value: 'male', display: 'Males'}, {value: 'female', display: 'Females'}];
+  genderList: any = [{value: 'male', display: 'Males'}, {value: 'female', display: 'Females'}];
   userParams: any = {};
   pagination: Pagination;
 
@@ -27,9 +28,7 @@ export class MemberListComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe((data) => {
-      // tslint:disable-next-line: no-string-literal
       this.users = data['users'].result;
-      // tslint:disable-next-line: no-string-literal
       this.pagination = data['users'].pagination;
     });
 
@@ -42,6 +41,7 @@ export class MemberListComponent implements OnInit {
 
     pageChanged(event: any): void {
       this.pagination.currentPage  = event.page;
+      console.log(this.pagination.currentPage);
       this.loadUsers();
     }
 
@@ -54,7 +54,7 @@ export class MemberListComponent implements OnInit {
 
 
    loadUsers() {
-    this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage, this.userParams)
+   this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage, this.userParams)
     .subscribe(
        (res: PaginatedResult<User[]>) => {
          this.users = res.result;
@@ -63,6 +63,7 @@ export class MemberListComponent implements OnInit {
        (error) => {
          this.alertify.error(error);
        }
-     );
-   }
+     )
+    ;
+  }
 }

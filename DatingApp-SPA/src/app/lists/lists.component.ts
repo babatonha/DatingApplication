@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../_models/user';
-import { Pagination, PaginatedResult } from '../_models/pagination';
+// import { Pagination, PaginatedResult } from '../_models/pagination';
 import { AuthService } from '../_services/auth.service';
 import { UserService } from '../_services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { AlertifyService } from '../_services/alertify.service';
+import { Pagination, PaginatedResult } from '../_models/pagination';
 
 @Component({
   selector: 'app-lists',
@@ -25,9 +26,7 @@ export class ListsComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe((data) => {
-      // tslint:disable-next-line: no-string-literal
       this.users = data['users'].result;
-      // tslint:disable-next-line: no-string-literal
       this.pagination = data['users'].pagination;
     });
     this.likesParam = 'Likers';

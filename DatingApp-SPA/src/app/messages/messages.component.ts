@@ -25,29 +25,27 @@ export class MessagesComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe((data) => {
-      // tslint:disable-next-line: no-string-literal
       this.messages = data['messages'].result;
-      // tslint:disable-next-line: no-string-literal
       this.pagination = data['messages'].pagination;
     });
   }
 
-  loadMessages() {
-    this.userService
-      .getMessages(
-        this.authService.decodedToken.nameid,
-        this.pagination.currentPage,
-        this.pagination.itemsPerPage,
-        this.messageContainer
-      )
-      .subscribe((res: PaginatedResult<Message[]>) => {
-          this.messages = res.result;
-          this.pagination = res.pagination;
-        }, error => {
-          this.alertify.error(error);
-        }
-      );
-  }
+  // loadMessages() {
+  //   this.userService
+  //     .getMessages(
+  //       this.authService.decodedToken.nameid,
+  //       this.pagination.currentPage,
+  //       this.pagination.itemsPerPage,
+  //       this.messageContainer
+  //     )
+  //     .subscribe((res: PaginatedResult<Message[]>) => {
+  //         this.messages = res.result;
+  //         this.pagination = res.pagination;
+  //       }, error => {
+  //         this.alertify.error(error);
+  //       }
+  //     );
+  // }
 
   deleteMessage(id: number){
     this.alertify.confirm('Are you sure you want to delete this message', () => {
@@ -60,8 +58,8 @@ export class MessagesComponent implements OnInit {
     });
   }
 
-  pageChanged(event: any): void {
-    this.pagination.currentPage = event.page;
-    this.loadMessages();
-  }
+  // pageChanged(event: any): void {
+  //   this.pagination.currentPage = event.page;
+  //   this.loadMessages();
+  // }
 }
