@@ -131,7 +131,7 @@ namespace DatingApp.API.Controllers
         }
 
         [HttpPost("{id}/read")] 
-        public async Task<IActionResult> MarkAsRead(int userId, int id)
+        public async Task<IActionResult> MarkMessageAsRead(int userId, int id)
         {
             if(userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();

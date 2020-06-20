@@ -87,7 +87,7 @@ export class UserService {
   }
 
   getMessages(id: number, page?, itemsPerPage?, messageContainer?) {
-    const paginationResult: PaginatedResult<Message[]> = new PaginatedResult<Message[]>();
+    const paginatedResult: PaginatedResult<Message[]> = new PaginatedResult<Message[]>();
     let params = new HttpParams();
 
     params = params.append('MessageContainer', messageContainer);
@@ -96,19 +96,14 @@ export class UserService {
       params = params.append('pageNumber', page);
       params = params.append('pageSize', itemsPerPage);
     }
-    return this.http.get<Message[]>(this.baseUrl + 'users/' + '/messages', {
-        observe: 'response',
-        params,
-      })
+    return this.http.get<Message[]>(this.baseUrl + 'users/' + id + '/messages', {observe: 'response', params})
       .pipe(
         map((response) => {
-          paginationResult.result = response.body;
+          paginatedResult.result = response.body;
           if (response.headers.get('Pagination') !== null) {
-            paginationResult.pagination = JSON.parse(
-              response.headers.get('Pagination')
-            );
+            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
           }
-          return PaginatedResult;
+          return paginatedResult;
         })
       );
   }
